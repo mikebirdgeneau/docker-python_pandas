@@ -8,3 +8,7 @@ RUN apk update && \
     pip install --no-cache-dir pandas && \
     rm /usr/include/xlocale.h && \
     apk del build_deps
+
+WORKDIR /site
+COPY ./ /site
+RUN pip install -U -r /site/requirements.txt
