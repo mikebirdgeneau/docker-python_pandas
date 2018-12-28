@@ -11,7 +11,7 @@ RUN apk add --update --upgrade \
     pango-dev py-lxml \
     py-setuptools libffi libffi-dev cython
     
-RUN pip install pandas
+RUN pip install cython && pip install pandas
 
 RUN apk --no-cache add msttcorefonts-installer fontconfig && \
     update-ms-fonts && \
