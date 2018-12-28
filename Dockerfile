@@ -1,20 +1,10 @@
 FROM python:3-alpine
 
-RUN apk --update --upgrade add linux-headers bash gcc \
-    musl-dev libjpeg-turbo-dev libpng libpq \
-    postgresql-dev uwsgi uwsgi-python3 git \
-    zlib-dev libmagic g++ libgfortran
-
-RUN apk add --update --upgrade \
-    cairo cairo-dev pango \
-    gdk-pixbuf gdk-pixbuf-dev py3-cffi py3-pillow \ 
-    pango-dev py-lxml \
-    py-setuptools libffi libffi-dev cython
-    
-RUN pip install cython && pip install pandas
-
-RUN apk --no-cache add msttcorefonts-installer fontconfig && \
-    update-ms-fonts && \
-    fc-cache -f
-
-CMD ["python3"]
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache libstdc++ && \
+    apk add --no-cache --virtual=build_deps g++ gfortran && \
+    ln -s /usr/include/locale.h /usr/include/xlocale.h && \
+    pip install --no-cache-dir pandas && \
+    rm /usr/include/xlocale.h && \
+    apk del build_deps
